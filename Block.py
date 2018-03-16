@@ -11,4 +11,7 @@ class Block:
 
 
     def compute_hash(self):
-        return hashlib.sha3_256(self.data + self.timestamp + self.last_hash)
+        return hashlib.sha256((str(self.timestamp)+str(self.data)+str(self.last_hash)).encode()).hexdigest()
+
+
+
