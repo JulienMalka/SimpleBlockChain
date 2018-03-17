@@ -1,7 +1,9 @@
 from Block import *
 class BlockChain:
+    DIFFICULTY = 5
     def __init__(self):
         self.chain = list[Block]
+
 
 
 
@@ -14,6 +16,9 @@ class BlockChain:
                 return False
             if last_block.hash != current_block.last_hash:
                 return False
+            if current_block.hash[:self.DIFFICULTY]!= [0]*self.DIFFICULTY:
+                return False
+
 
         return True
 
