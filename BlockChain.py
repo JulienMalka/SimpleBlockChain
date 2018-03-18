@@ -34,6 +34,8 @@ class BlockChain():
         return todict
 
 
+
+
     def add_transaction(self, transaction):
         self.transactions_pool.append(transaction)
 
@@ -52,14 +54,14 @@ class BlockChain():
         pool = self.transactions_pool
         nonce = 0
         timestamp = time.time()
-        while self.hash(str(last_block.hash) + str(timestamp) + str(pool) + str(nonce))[:self.DIFFICULTY] != self.string_difficulty():
+        while self.hash(str(last_block.hash) + str(timestamp) + str(Block.todict(pool)) + str(nonce))[:self.DIFFICULTY] != self.string_difficulty():
             nonce = nonce+1
         self.chain.append(Block(last_block.hash, pool, nonce, timestamp))
         return "Mined block !"
 
     @staticmethod
     def genesis():
-        return Block(0, "nope", 0, time.time())
+        return Block(0, {}, 0, time.time())
 
 
 

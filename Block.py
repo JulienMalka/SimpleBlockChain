@@ -5,7 +5,13 @@ class Block:
     def __init__(self, last_hash, transactions, nonce, timestamp):
         self.timestamp = timestamp
         self.last_hash = last_hash
-        self.transactions = transactions
+        if type(transactions) is list:
+            self.transactions = self.todict(transactions)
+        else:
+            self.transactions = {}
+
+
+
         self.nonce = nonce
         self.hash = self.compute_hash()
 
@@ -21,6 +27,10 @@ class Block:
 
 
 
+    @staticmethod
+    def todict(transactions):
+        todict = []
+        for transaction in transactions:
+            todict.append(transaction.__dict__)
+        return todict
 
-    def to_json(self):
-        return "lol"

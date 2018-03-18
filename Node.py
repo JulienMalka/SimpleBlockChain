@@ -1,8 +1,11 @@
 import json
 from flask import Flask
 from flask import jsonify
+from flask import request
 from uuid import uuid4
+import requests
 from BlockChain import *
+from Transaction import *
 app = Flask(__name__)
 node_identifier = str(uuid4()).replace('-', '')
 blockchain = BlockChain()
@@ -21,7 +24,15 @@ def valid():
 
 @app.route('/transactions/new', methods=['POST'])
 def new_transaction():
-    return "We'll add a new transaction"
+    request_values = request.get_json()
+    print(request)
+    print(request_values)
+    required = ['sender', 'recipient', 'amount']
+    if request_values==None or not all(k in request_values for k in required):
+        return 'Missing values', 400
+    transaction = Transaction(request_values["sender"], request_values["recipient"], request_values["amount"])
+    blockchain.add_transaction(transaction)
+    return "Your transaction has been added to the pool"
 
 
 @app.route('/chain', methods=['GET'])
@@ -31,6 +42,9 @@ def full_chain():
         'length': len(blockchain.chain),
     }
     return jsonify(response), 200
+
+
+
 
 
 if __name__ == '__main__':
