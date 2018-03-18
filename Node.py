@@ -6,11 +6,17 @@ from BlockChain import *
 app = Flask(__name__)
 node_identifier = str(uuid4()).replace('-', '')
 blockchain = BlockChain()
+blockchain.chain.append(blockchain.genesis())
 
 
 @app.route('/mine', methods=['GET'])
 def mine():
-    return "We'll mine a new Block"
+    return blockchain.mine()
+
+@app.route('/valid', methods=['GET'])
+def valid():
+    return jsonify(blockchain.is_valid())
+
 
 
 @app.route('/transactions/new', methods=['POST'])
@@ -21,7 +27,7 @@ def new_transaction():
 @app.route('/chain', methods=['GET'])
 def full_chain():
     response = {
-        'chain': blockchain.chain,
+        'chain': blockchain.todict(),
         'length': len(blockchain.chain),
     }
     return jsonify(response), 200

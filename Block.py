@@ -2,21 +2,25 @@ import time
 import hashlib
 
 class Block:
-    def __init__(self, index, data, last_hash):
-        self.index = index
-        self.data = data
-        self.timestamp = time.time()
+    def __init__(self, last_hash, transactions, nonce, timestamp):
+        self.timestamp = timestamp
         self.last_hash = last_hash
+        self.transactions = transactions
+        self.nonce = nonce
         self.hash = self.compute_hash()
 
+
     def compute_hash(self):
-        to_be_hashed = str(self.index) + str(self.last_hash) + str(self.timestamp) + str(self.data)
+        to_be_hashed = str(str(self.last_hash) + str(self.timestamp) + str(self.transactions) + str(self.nonce))
         return hashlib.sha256(to_be_hashed.encode()).hexdigest()
 
 
     @staticmethod
     def genesis():
-        return Block(0, "genesis", None)
+        return None
 
 
 
+
+    def to_json(self):
+        return "lol"
