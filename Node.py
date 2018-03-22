@@ -20,6 +20,13 @@ def mine():
 def valid():
     return jsonify(blockchain.is_valid())
 
+@app.route('/minerate', methods=['POST'])
+def minerate():
+    request_values = request.get_json()
+    amount = request_values["amount"]
+    blockchain.set_mining_rate(amount)
+    return "Changed mining rate"
+
 
 
 @app.route('/transactions/new', methods=['POST'])
@@ -42,6 +49,8 @@ def full_chain():
         'length': len(blockchain.chain),
     }
     return jsonify(response), 200
+
+
 
 
 

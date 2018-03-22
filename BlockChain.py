@@ -1,12 +1,17 @@
 from Block import *
 import time
+import random
 
 class BlockChain():
     DIFFICULTY = 5
     def __init__(self):
         self.chain = []
         self.transactions_pool = []
+        self.minerate = 1
 
+
+    def set_mining_rate(self, minerate):
+        self.minerate = minerate
 
 
     def is_valid(self):
@@ -55,13 +60,11 @@ class BlockChain():
         nonce = 0
         timestamp = time.time()
         while self.hash(str(last_block.hash) + str(timestamp) + str(Block.todict(pool)) + str(nonce))[:self.DIFFICULTY] != self.string_difficulty():
-            nonce = nonce+1
+            if random.random()<=self.minerate:
+                nonce = nonce+1
         self.chain.append(Block(last_block.hash, pool, nonce, timestamp))
         return "Mined block !"
 
     @staticmethod
     def genesis():
         return Block(0, {}, 0, time.time())
-
-
-
