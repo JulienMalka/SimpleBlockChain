@@ -3,7 +3,7 @@ import time
 import random
 
 class BlockChain():
-    DIFFICULTY = 5
+    DIFFICULTY = 6
     def __init__(self):
         self.chain = []
         self.transactions_pool = []
