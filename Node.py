@@ -53,7 +53,7 @@ def chain():
 
 @app.route('/wallet/balance', methods=['GET'])
 def balance():
-    return 'Balance :' + wallet.balance()
+    return 'Balance : ' + str(wallet.balance())
 
 
 @app.route('/wallet/newtransaction', methods=['POST'])

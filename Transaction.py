@@ -8,7 +8,7 @@ class Transaction:
 
 
     def dump(self):
-        return str(sefl.sender) + str(self.recipient) + str(self.amount)
+        return str(self.sender) + str(self.recipient) + str(self.amount)
 
 
     def sign_transaction(self, signature):
@@ -16,7 +16,7 @@ class Transaction:
 
 
     def is_valid(self):
-        if simplecrypto.decrypt(self.sender, signature) == self.transaction_dump:
+        if simplecrypto.decrypt(self.sender, self.signature) == self.dump():
             return True
         else:
             return False
