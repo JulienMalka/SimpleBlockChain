@@ -1,4 +1,5 @@
 import SimpleCrypto as simplecrypto
+import Node as node
 import pickle
 import os.path
 
@@ -19,3 +20,9 @@ class Wallet():
 
         print("Public key : "+str(self.public_key))
         print("Private key (keep that safe) : " + str(self.private_key))
+
+
+
+
+    def balance(self):
+        print(node.blockchain.chain)

@@ -43,7 +43,7 @@ def new_transaction():
 
 
 @app.route('/chain', methods=['GET'])
-def full_chain():
+def chain():
     response = {
         'chain': blockchain.todict(),
         'length': len(blockchain.chain),
