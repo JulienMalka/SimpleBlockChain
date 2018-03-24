@@ -1,11 +1,11 @@
 import SimpleCrypto as simplecrypto
 import Transaction as transaction
-import Node as node
 import pickle
 import os.path
 
 class Wallet():
-    def __init__(self):
+    def __init__(self, blockchain):
+        self.blockchain = blockchain
         if os.path.exists('wallet.pkl'):
             pkl_file = open('wallet.pkl', 'rb')
             keys = pickle.load(pkl_file)
@@ -24,8 +24,7 @@ class Wallet():
 
     def balance(self):
         balance = 0
-        blockchain = node.blockchain.chain
-        for block in blockchain:
+        for block in self.blockchain:
             for transaction in block.transactions:
                 if transaction.sender == self.public_key:
                     balance = balance - transaction.amount
@@ -40,7 +39,7 @@ class Wallet():
         signature = simplecrypto.encrypt(self.private_key, to_sign)
         transaction_signed = transaction_unsigned.sign_transaction(signature)
         if transaction_signed.is_valid():
-            node.blockchain.add_transaction(transaction_signed)
+            self.blockchain.add_transaction(transaction_signed)
             print("transaction valid -> added to pool")
         else:
             print("something went wrong")

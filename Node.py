@@ -1,5 +1,5 @@
 import json
-from Wallet import Wallet
+from Wallet import *
 from flask import Flask
 from flask import jsonify
 from flask import request
@@ -11,7 +11,7 @@ app = Flask(__name__)
 node_identifier = str(uuid4()).replace('-', '')
 blockchain = BlockChain()
 blockchain.chain.append(blockchain.genesis())
-wallet = Wallet()
+wallet = Wallet(blockchain)
 
 @app.route('/mine', methods=['GET'])
 def mine():
@@ -54,6 +54,18 @@ def chain():
 @app.route('/wallet/balance', methods=['GET'])
 def balance():
     return 'Balance :' + wallet.balance()
+
+
+@app.route('/wallet/newtransaction', methods=['POST'])
+def new_transaction_wallet():
+    request_values = request.get_json()
+    print(request)
+    print(request_values)
+    required = ['recipient', 'amount']
+    if request_values==None or not all(k in request_values for k in required):
+        return 'Missing values', 400
+    wallet.new_transaction(request_values['amount'], request_values['recipient'])
+    return "Your transaction has been added to the pool"
 
 
 if __name__ == '__main__':
