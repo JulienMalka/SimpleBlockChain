@@ -1,4 +1,5 @@
 import json
+from Wallet import Wallet
 from flask import Flask
 from flask import jsonify
 from flask import request
@@ -10,7 +11,7 @@ app = Flask(__name__)
 node_identifier = str(uuid4()).replace('-', '')
 blockchain = BlockChain()
 blockchain.chain.append(blockchain.genesis())
-
+wallet = Wallet()
 
 @app.route('/mine', methods=['GET'])
 def mine():
@@ -50,10 +51,9 @@ def chain():
     }
     return jsonify(response), 200
 
-
-
-
-
+@app.route('/wallet/balance', methods=['GET'])
+def balance():
+    return 'Balance :' + wallet.balance()
 
 
 if __name__ == '__main__':

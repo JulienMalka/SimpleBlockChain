@@ -21,8 +21,13 @@ class Wallet():
         print("Public key : "+str(self.public_key))
         print("Private key (keep that safe) : " + str(self.private_key))
 
-
-
-
     def balance(self):
-        print(node.blockchain.chain)
+        balance = 0
+        blockchain = node.blockchain.chain
+        for block in blockchain:
+            for transaction is block.transactions:
+                if transaction.sender = self.public_key:
+                    balance = balance - transaction.amount
+                if transaction.recipient = self.public_key:
+                    balance = balance + transaction.amount
+        return balance            
