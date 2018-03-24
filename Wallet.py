@@ -26,10 +26,11 @@ class Wallet():
         balance = 0
         for block in self.blockchain.chain:
             for transaction in block.transactions:
-                if transaction.sender == self.public_key:
-                    balance = balance - transaction.amount
-                if transaction.recipient == self.public_key:
-                    balance = balance + transaction.amount
+                print(transaction)
+                if transaction['sender'] == self.public_key:
+                    balance = balance - transaction['amount']
+                if transaction['recipient'] == self.public_key:
+                    balance = balance + transaction['amount']
         return balance
 
 

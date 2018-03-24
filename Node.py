@@ -64,7 +64,7 @@ def new_transaction_wallet():
     required = ['recipient', 'amount']
     if request_values==None or not all(k in request_values for k in required):
         return 'Missing values', 400
-    wallet.new_transaction(request_values['amount'], request_values['recipient'])
+    wallet.new_transaction(request_values['recipient'], request_values['amount'])
     return "Your transaction has been added to the pool"
 
 
