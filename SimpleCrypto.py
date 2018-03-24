@@ -2,7 +2,7 @@ import math
 import pyprimes
 import random
 
-
+#return keys in this order : public, private
 def generate_keypair():
     primes =list(pyprimes.nprimes(10000))
     first_index = random.randrange(0, len(primes))
@@ -13,14 +13,8 @@ def generate_keypair():
     q = primes[second_index]
     K = p * q
     e = 65537
-    print(p)
-    print(q)
     phi = (p-1) * (q-1)
     k = inverse(e, phi)
-
-    print(k)
-    #Return public and private keypair
-    #Public key is (e, n) and private key is (d, n)
     return ((e, K), (k, K))
 
 def encrypt(key, message):
